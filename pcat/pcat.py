@@ -1,8 +1,11 @@
 #!/usr/local/bin/python
-''' Linux cat command simulator '''
+'''Linux cat command simulator'''
+
 
 def ANSIColor(mod, color):
-    
+    '''Python ANSI colors for (f)oreground and (b)ackground'''
+
+
     if mod=='f':
         if color=='Black':	
             return '\033[1;30m'
@@ -47,8 +50,13 @@ def ANSIColor(mod, color):
                 return '\033[1;0m'
 
 def pcat(fileName):
-    import os, curses, sys
-    
+    '''cat command simulation'''
+
+
+    import os, curses, sys, rich
+    from rich.console import Console
+    from rich.table import Table
+
 
     with open(fileName, "r", encoding="utf-8") as f:
         title1 = f"\n {ANSIColor('f', 'White')} File status:\n"
@@ -57,8 +65,9 @@ def pcat(fileName):
         divider1 = f"   ###################### \n\n"
         
         print(f"{title1}{line1}{line2}{divider1}")              
-             
-              
+        
+        
+        # read and print the contents of the file line by line
         i = 0
         for line in f:
             i+=1
@@ -83,6 +92,7 @@ if __name__ == "__main__":
                 help='the input file name'
             )
 
+    
     args = parser.parse_args()
 
     pcat(args.filename)
